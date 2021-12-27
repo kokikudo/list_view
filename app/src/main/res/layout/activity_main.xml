@@ -13,10 +13,21 @@
    -->
     <ListView
         android:id="@+id/list"
-        android:choiceMode="multipleChoiceModal"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:choiceMode="multipleChoiceModal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <!-- iconifiedByDefault: falseにすると最初からクリックしなくても検索ボックスを表示 -->
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="検索文字列を入力"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
