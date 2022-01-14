@@ -6,21 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-   <!-- choiceModeをmultipleChoiceModalにすることで
-   リストの選択モードに移動できるようになる
-   モードに移動しなくても削除や追加はできるが、メールの削除などによく使われていて、
-   わかりやすいので使うようにする
-   -->
-    <ListView
-        android:id="@+id/list"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:choiceMode="multipleChoiceModal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- iconifiedByDefault: falseにすると最初からクリックしなくても検索ボックスを表示 -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

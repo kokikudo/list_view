@@ -1,20 +1,28 @@
 package com.example.list_view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.*
-import androidx.core.view.forEach
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.list_view.databinding.ActivityMainBinding
 
-// ListViewをカスタマイズする用のレイアウトファイルを作成(list_item.xml)
-// layoutフォルダからリソースファイルを作成
-// New Resource File画面からファイル名を決めてOK
-// SimpleAdapterを定義してリストにセット
-// シンプルに実装できる分、制約も多い
+/*
+    RecyclerViewのメリット
+    ・　ListViewより柔軟なカスタマイズができる
+    ・　リストを作成するための役割がクラスごとに分かれてるため把握しやすい
+    ・　ビューを再利用しながら表示するので大きなデータを表示するのに向いている
+    RecyclerViewのデメリット
+    ・　コードが長くなりがち
+    ・　構造が複雑で理解が難しい
+
+    実装手順
+    ・　RecyclerViewレイアウトを配置
+    ・　表示したい値をもつデータクラスを作成(ListItem.kt)
+    ・　CardViewレイアウトを作成（list_item.xml）
+    ・  Holderクラスを作成(MyViewHolder.kt)
+    ・　Adapterクラスを作成(MyListAdapter.kt)
+    ・　レイアウトマネージャーを設定
+    ・　AdapterをRecyclerViewにセット
+ */
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,24 +35,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // リストアイテム
         val data = listOf(
-            mapOf("title" to "革命のエチュード", "tag" to "ピアノ", "desc" to "ピアノの詩人と言われたショパンの代表的なピアノ曲です"),
-            mapOf("title" to "革命のエチュード2", "tag" to "ピアノ2", "desc" to "ピアノの詩人と言われたショパンの代表的なピアノ曲です2"),
-            mapOf("title" to "革命のエチュード3", "tag" to "ピアノ3", "desc" to "ピアノの詩人と言われたショパンの代表的なピアノ曲です3"),
-            mapOf("title" to "革命のエチュード4", "tag" to "ピアノ4", "desc" to "ピアノの詩人と言われたショパンの代表的なピアノ曲です4"),
+            ListItem(1, "嫌われる勇気", "精神学", "アドラーなんとか"),
+            ListItem(2, "博士号の取り方", "ビジネス", "学生と指導教官のためのハンドブック"),
+            ListItem(3, "メモのまりょく", "自己啓発", "人生が変わるメモ活用術"),
+            ListItem(4, "ゼロ", "堀江貴文", "俺に入れてもらうことできるか？"),
         )
 
-        // Adapterを定義してリストにセット
-        val adapter = SimpleAdapter(
-            this,
-            data,
-            R.layout.list_item, // 作ったレイアウトファイル
-            arrayOf("title", "tag", "desc"), // キーの設定
-            intArrayOf(R.id.item_title, R.id.item_tag, R.id.item_desc) // 割り当てるデータ
-        )
-        binding.list.adapter = adapter
-
-
+        // サイズを固定した時にパフォーマンスを向上させる
+        binding.rv.setHasFixedSize(true)
+        // レイアウトマネージャーの準備
+        binding.rv.layoutManager = LinearLayoutManager(this).apply {
+            orientation = LinearLayoutManager.VERTICAL // 縦向き
+        }
+        // アダプターをRecyclerManagerに設定
+        binding.rv.adapter = MyListAdapter(data)
     }
 }
